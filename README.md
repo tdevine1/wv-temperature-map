@@ -8,7 +8,7 @@ This tutorial guides you through creating a React-based web application that dis
 - [Running the Application Locally with Mock Data](#running-the-application-locally-with-mock-data)
 - [Switching to Real API Data](#switching-to-real-api-data)
 - [Collaboration and Deployment](#collaboration-and-deployment)
-- [Conclusion](#conclusion)
+- [Alternative Directions for non-initial commits](#alternative-directions-for-non-initial-commits)
 
 ---
 
@@ -23,49 +23,45 @@ Node.js is required to run a React application. Follow these steps:
   node -v
   npm -v
   ```
+
 ### 2. Install Git
 You need Git for version control and collaboration:
-
-Download Git from https://git-scm.com/downloads and install it.
-During the installation process, make sure to select the option "Add Git to your PATH" so that you can run Git commands from the terminal.
-Verify that Git is installed by running:
-bash
-Copy code
+- Download Git from [https://git-scm.com/downloads](https://git-scm.com/downloads) and install it.
+- During the installation process, make sure to select the option "Add Git to your PATH" so that you can run Git commands from the terminal.
+- Verify that Git is installed by running:
+```bash
 git --version
+```
 
 ### 3. Create a React Project
 Now, create the React application:
-
-Open your terminal or command prompt.
-Create a new React app by running the following command:
-bash
-Copy code
+- Open your terminal or command prompt.
+- Create a new React app by running the following command:
+```bash
 npx create-react-app wv-temperature-map
-Navigate to the project folder:
-bash
-Copy code
+```
+- Navigate to the project folder:
+``` bash
 cd wv-temperature-map
+```
 
 ### 4. Install Required Libraries
 We’ll use React-Leaflet for map rendering and Axios for future API requests.
-
-Install react-leaflet and leaflet:
-bash
-Copy code
+- Install react-leaflet and leaflet:
+``` bash
 npm install react-leaflet leaflet
-Install axios for future API integration:
-bash
-Copy code
+```
+- Install axios for future API integration:
+```bash
 npm install axios
+```
 
 ## Creating Mock Data for Local Testing
 We’ll start by using mock data to test the application locally without requiring API calls.
 
 ### 1. Create the Map Component
 In the src directory, create a new file called MapComponent.js:
-
-jsx
-Copy code
+```jsx
 import React from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -91,11 +87,10 @@ const MapComponent = ({ temperatures }) => {
 };
 
 export default MapComponent;
-2. Update the App.js File to Use Mock Data
+```
+## 2. Update the App.js File to Use Mock Data
 Replace the content in App.js with the following code to use mock data instead of fetching from an API:
-
-jsx
-Copy code
+```jsx
 import React, { useState } from 'react';
 import MapComponent from './MapComponent';
 
@@ -121,29 +116,29 @@ function App() {
 }
 
 export default App;
+```
 
 ## Running the Application Locally with Mock Data
 Once you've set up the mock data, you can test the app locally.
 
-1. Start the Development Server
+### 1. Start the Development Server
 In your project directory, run the following command:
 
-bash
-Copy code
+```bash
 npm start
-This will start a development server, and the application will be available at http://localhost:3000.
+```
+This will start a development server, and the application will be available at [http://localhost:3000](http://localhost:3000).
 
-2. View the App in Your Browser
-Open your browser and go to http://localhost:3000. You should see a map of West Virginia with markers at the specified mock data locations, each displaying the temperature when clicked.
+### 2. View the App in Your Browser
+Open your browser and go to [http://localhost:3000](http://localhost:3000). You should see a map of West Virginia with markers at the specified mock data locations, each displaying the temperature when clicked.
 
-Switching to Real API Data
+## Switching to Real API Data
 Once you’re ready to replace the mock data with real NOAA data, follow these steps.
 
-1. Update App.js to Fetch Real Data
+### 1. Update App.js to Fetch Real Data
 Replace the mock data logic with an API call using Axios:
 
-jsx
-Copy code
+```jsx
 import React, { useEffect, useState } from 'react';
 import MapComponent from './MapComponent';
 import axios from 'axios';
@@ -173,143 +168,148 @@ function App() {
 }
 
 export default App;
+```
 
 ### 2. Install Axios if Needed
 If you haven't installed Axios yet, do so by running:
 
-bash
-Copy code
+```bash
 npm install axios
-Collaboration and Deployment
-1. Set Up GitHub for Collaboration
-1. Initialize Git
-Initialize Git in your project directory:
+```
 
-bash
-Copy code
+## Collaboration and Deployment
+Set Up GitHub for Collaboration
+### 1. Initialize Git
+- Initialize Git in your project directory:
+
+```bash
 git init
-2. Set Up Your Git Identity
-Run these commands to set your global Git username and email:
+```
+### 2. Set Up Your Git Identity
+- Run these commands to set your global Git username and email:
 
-bash
-Copy code
+```bash
 git config --global user.name "Your Name"
 git config --global user.email "your.email@example.com"
+```
 
 ### 3. Create a GitHub Repository
-Go to GitHub and create a new repository.
-Add the remote GitHub repository URL to your local project:
-bash
-Copy code
+- Go to GitHub and create a new repository.
+- Add the remote GitHub repository URL to your local project:
+
+```bash
 git remote add origin <repository-url>
+```
+
 ### 4. Push Your Project to GitHub
-bash
-Copy code
+```bash
 git add .
 git commit -m "Initial commit"
 git push -u origin master
+```
 
-### 2. Creating a Pull Request
-Create a new branch for your feature:
-bash
-Copy code
+Create a Pull Request
+- Create a new branch for your feature:
+```bash
 git checkout -b feature-branch
-Once your work is done, push the branch to GitHub:
-bash
-Copy code
+```
+
+- Once your work is done, push the branch to GitHub:
+
+```bash
 git add .
 git commit -m "Feature: Add new functionality"
 git push origin feature-branch
-On GitHub, create a Pull Request to merge the feature branch into the main branch.
-### 3. Deploy to Azure App Service
-Log into the Azure Portal.
-Create a new App Service and select Node.js as the runtime.
-Link your GitHub repository for continuous deployment.
+```
+- On GitHub, create a Pull Request to merge the feature branch into the main branch.
 
-## Alternative Directions for Team Members to Contribute
+### 3. Deploy to Azure App Service
+- Log into the Azure Portal.
+- Create a new App Service and select Node.js as the runtime.
+- Link your GitHub repository for continuous deployment.
+
+## Alternative Directions for non-initial commits
 If you were not the one to make the initial commit to the repository, follow these steps to clone the project and start developing in your own branch.
 
 ### 1. Clone the GitHub Repository
-Get the URL of the repository from GitHub. The URL will look something like this:
-
-arduino
-Copy code
+- Get the URL of the repository from GitHub. The URL will look something like this:
+```arduino
 https://github.com/username/wv-temperature-map.git
-Open a terminal or command prompt and navigate to the directory where you want to store the project.
+```
+- Open a terminal or command prompt and navigate to the directory where you want to store the project.
 
-Clone the repository by running:
+- Clone the repository by running:
 
-bash
-Copy code
+```bash
 git clone https://github.com/username/wv-temperature-map.git
+```
 This will download the project to your local machine.
 
 ### 2. Navigate into the Project Directory
 After cloning, change into the project directory:
 
-bash
-Copy code
+```bash
 cd wv-temperature-map
+```
 
 ### 3. Create a New Branch
 To avoid making changes directly to the main branch, you should create a new branch for the feature or task you are working on.
 
-Create a new branch with a descriptive name:
+- Create a new branch with a descriptive name:
 
-bash
-Copy code
+```bash
 git checkout -b my-feature-branch
-Replace my-feature-branch with a meaningful name, such as add-map-functionality or fix-temperature-bug.
+```
+- Replace "my-feature-branch" with a meaningful name, such as add-map-functionality or fix-temperature-bug.
 
 ### 4. Install Dependencies
 Before you start development, make sure to install all the required dependencies. This only needs to be done once after cloning the repo:
 
-bash
-Copy code
+```bash
 npm install
+```
+
 ### 5. Start Developing
 You are now on your own feature branch and can start developing. Make sure to run the project locally using:
 
-bash
-Copy code
+```bash
 npm start
-This will start the development server, and you can view the app at http://localhost:3000.
+```
+This will start the development server, and you can view the app at [http://localhost:3000](http://localhost:3000).
 
 ### 6. Committing Changes
 After making changes, add and commit them to your local branch:
 
-bash
-Copy code
+```bash
 git add .
 git commit -m "Description of the changes you made"
+```
 
 ### 7. Push Your Branch to GitHub
 Once your changes are committed locally, push them to the GitHub repository:
 
-bash
-Copy code
+```bash
 git push origin my-feature-branch
+```
 This will push your branch to GitHub where the rest of the team can see and review your changes.
 
 ### 8. Create a Pull Request
-Go to the GitHub repository in your browser.
-Click on the Pull Requests tab.
-Click New Pull Request.
-Select your branch as the "compare" branch and the main branch as the "base" branch.
-Submit the pull request with a description of the changes.
+- Go to the GitHub repository in your browser.
+- Click on the Pull Requests tab.
+- Click New Pull Request.
+- Select your branch as the "compare" branch and the main branch as the "base" branch.
+- Submit the pull request with a description of the changes.
 Once the pull request is approved and merged, your changes will be part of the main project!
 
 ### 9. Keeping Your Branch Up-to-Date
 If others are working on the project, you may want to pull the latest changes from the main branch to keep your branch up-to-date:
 
-Fetch the latest changes:
-
-bash
-Copy code
+- Fetch the latest changes:
+```bash
 git fetch origin
-Merge the changes from main into your branch:
-
-bash
-Copy code
+```
+- Merge the changes from main into your branch:
+```bash
 git merge origin/main
-Resolve any merge conflicts if necessary, and push your updated branch to GitHub.
+```
+- Resolve any merge conflicts if necessary, and push your updated branch to GitHub.
