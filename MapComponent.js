@@ -1,7 +1,19 @@
+/**
+ * MapComponent.js
+ * 
+ * This component displays an interactive map with markers showing temperature data 
+ * for various locations in West Virginia. It uses react-leaflet to render the map.
+ */
+
 import React from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
+/**
+ * MapComponent displays a map with markers for each location in the provided data.
+ * @param {Array} temperatures - Array of temperature data with lat/lon, name, and temperature.
+ * @returns {JSX.Element} The map with temperature markers.
+ */
 const MapComponent = ({ temperatures }) => {
   const center = [38.5976, -80.4549]; // Approximate center of WV
 

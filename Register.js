@@ -1,15 +1,29 @@
+/**
+ * Register.js
+ * 
+ * This component provides a registration form for new users. It sends 
+ * the registration details to the backend, and if successful, redirects to the login page.
+ */
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
+/**
+ * Register component allows new users to create an account.
+ * @returns {JSX.Element} The registration form.
+ */
 const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
+  const navigate = useNavigate();
+  /**
+   * Handles form submission by sending registration details to the backend.
+   * @param {Object} e - Event object from the form submission.
+   */
   const handleRegister = async (e) => {
     e.preventDefault();
 
     try {
-      // Send a POST request to the backend registration endpoint
       const response = await axios.post(
         'http://localhost:5000/auth/register',
         { username, password },
@@ -18,6 +32,7 @@ const Register = () => {
 
       if (response.data.message === 'User registered successfully') {
         alert('Registration successful');
+        navigate('/'); // Navigate to login page after registration
       }
     } catch (error) {
       console.error('Registration failed:', error);
