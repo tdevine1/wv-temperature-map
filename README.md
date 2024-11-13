@@ -101,7 +101,7 @@ In this section, we’ll set up an Azure SQL Database, configure VS Code to conn
 	- Go to the Query Editor in the Azure portal (under SQL databases > your database > Query editor).
 	- Log in with the admin credentials you set earlier.
 	- Run the following SQL command to create a Users table:
-'''sql
+```sql
 CREATE TABLE Users (
   id INT PRIMARY KEY IDENTITY,
   username NVARCHAR(50) NOT NULL,
