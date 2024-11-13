@@ -70,38 +70,37 @@ npm start
 ```
 - Open your browser and go to http://localhost:3000 to verify the frontend.
 ## 3. Backend Setup
-## 3. Backend Setup
 In this section, we’ll set up an Azure SQL Database, configure VS Code to connect to the database, and set up the backend to use the Azure SQL connection.
 
 ### Step 1: Set Up an Azure SQL Database
-1 Create an Azure SQL Database on Azure (NOTE: For CS 330, your databases are already created)
-- Sign in to Azure Portal:
--- Go to https://portal.azure.com.
+- Create an Azure SQL Database on Azure (NOTE: For CS 330, your databases are already created)
+	- Sign in to Azure Portal:
+	- Go to https://portal.azure.com.
 - Create a New Resource:
--- Search for SQL Database in the search bar.
--- Click Create under SQL Database.
+	- Search for SQL Database in the search bar.
+	- Click Create under SQL Database.
 - Configure Database Basics:
--- Subscription: Choose your Azure subscription.
--- Resource Group: Create a new resource group or use an existing one.
--- Database Name: Choose a unique name for your database (e.g., wv-temperature-db).
+	- Subscription: Choose your Azure subscription.
+	- Resource Group: Create a new resource group or use an existing one.
+	- Database Name: Choose a unique name for your database (e.g., wv-temperature-db).
 - Configure the Server:
--- Under Server, click Create new.
--- Server Name: Choose a unique name (e.g., wv-temperature-server).
--- Admin Username and Password: Enter credentials to manage your database.
--- Location: Select the closest location.
--- Click OK to create the server.
+	- Under Server, click Create new.
+	- Server Name: Choose a unique name (e.g., wv-temperature-server).
+	- Admin Username and Password: Enter credentials to manage your database.
+	- Location: Select the closest location.
+	- Click OK to create the server.
 - Additional Settings:
--- Choose Use existing data or None for now.
--- Click Review + create, then Create to finalize the setup.
-2 Configure Firewall Settings
-- Once the SQL database is created, go to the Server settings (under SQL Databases, click on the server name).
-- Select Networking > Firewall and virtual networks.
-- Add your IP address to the Allow Azure services and resources to access this server section, enabling access to the database from your local machine.
-- Save your changes.
-3 Set Up a Sample Database Table
-- Go to the Query Editor in the Azure portal (under SQL databases > your database > Query editor).
-- Log in with the admin credentials you set earlier.
-- Run the following SQL command to create a Users table:
+	- Choose Use existing data or None for now.
+	- Click Review + create, then Create to finalize the setup.
+- Configure Firewall Settings
+	- Once the SQL database is created, go to the Server settings (under SQL Databases, click on the server name).
+	- Select Networking > Firewall and virtual networks.
+	- Add your IP address to the Allow Azure services and resources to access this server section, enabling access to the database from your local machine.
+	- Save your changes.
+- Set Up a Sample Database Table
+	- Go to the Query Editor in the Azure portal (under SQL databases > your database > Query editor).
+	- Log in with the admin credentials you set earlier.
+	- Run the following SQL command to create a Users table:
 '''sql
 CREATE TABLE Users (
   id INT PRIMARY KEY IDENTITY,
@@ -109,7 +108,7 @@ CREATE TABLE Users (
   password NVARCHAR(255) NOT NULL
 );
 ```
-- This table will store usernames and hashed passwords for authentication.
+	- This table will store usernames and hashed passwords for authentication.
 
 ### Step 2: Connect to Azure SQL Database in VS Code
 
