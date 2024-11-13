@@ -1,14 +1,13 @@
 # WV Temperature Map Project Setup Guide
 This tutorial will guide you through the entire setup process for the WV Temperature Map project. We’ll start by setting up VS Code to connect to GitHub, proceed with the frontend and backend setup, and finish by integrating both parts to run the application as a cohesive whole.
 
-Repository: https://github.com/tdevine1/wv-temperature-map
 ---
 ## Table of Contents
-Setting Up VS Code with GitHub
-Frontend Setup
-Backend Setup
-Integrating Frontend and Backend
-Running the Complete Application
+- 1. Setting Up VS Code with GitHub
+- 2. Frontend Setup
+- 3. Backend Setup
+- 4. Integrating Frontend and Backend
+- 5. Running the Complete Application
 ---
 
 ## 1. Setting Up VS Code with GitHub
