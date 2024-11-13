@@ -3,11 +3,11 @@ This tutorial will guide you through the entire setup process for the WV Tempera
 
 ---
 ## Table of Contents
-- 1. Setting Up VS Code with GitHub
-- 2. Frontend Setup
-- 3. Backend Setup
-- 4. Integrating Frontend and Backend
-- 5. Running the Complete Application
+1. Setting Up VS Code with GitHub
+2. Frontend Setup
+3. Backend Setup
+4. Integrating Frontend and Backend
+5. Running the Complete Application
 ---
 
 ## 1. Setting Up VS Code with GitHub
