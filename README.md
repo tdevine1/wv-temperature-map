@@ -69,10 +69,22 @@ Refer to the following structure for setting up each component:
 npm start
 ```
 - Open your browser and go to http://localhost:3000 to verify the frontend.
-## 3. Backend Setup
-In this section, we’ll set up an Azure SQL Database, configure VS Code to connect to the database, and set up the backend to use the Azure SQL connection.
 
-### Step 1: Set Up an Azure SQL Database
+## 3. Backend Setup
+In this section, we’ll set up the backend on VSCode, create and initialize an Azure SQL Database, configure VS Code to connect to the database, and set up the backend to use the Azure SQL connection.
+
+### Step 1: Set Up a Node.js and Express Backend
+- Create a folder in src called 'backend' with 2 subfolders called 'routes' and 'middleware'
+- In the backend folder, initialize a Node.js project:
+```bash
+npm init -y
+```
+- Install dependencies:
+```bash
+npm install express mssql bcryptjs jsonwebtoken dotenv cookie-parser cors
+```
+
+### Step 2: Set Up an Azure SQL Database
 - Create an Azure SQL Database on Azure (NOTE: For CS 330, your databases are already created)
 	- Sign in to Azure Portal:
 	- Go to https://portal.azure.com.
@@ -108,22 +120,28 @@ CREATE TABLE Users (
   password NVARCHAR(255) NOT NULL
 );
 ```
-	- This table will store usernames and hashed passwords for authentication.
+This table will store usernames and hashed passwords for authentication.
 
-### Step 2: Connect to Azure SQL Database in VS Code
+### Step 3: Connect to Azure SQL Database in VS Code
+- Install the SQL Server Extension:
+	- Open Extensions in VS Code (Ctrl+Shift+X or Cmd+Shift+X on Mac).
+	- Search for mssql and install the SQL Server (mssql) extension by Microsoft.
+- Connect to Azure SQL Database:
+	- Open the Command Palette (Ctrl+Shift+P or Cmd+Shift+P) and type MS SQL: Connect.
+	- Select Create Connection Profile.
+	- Enter the following details:
+		-Server Name: <your-server-name>.database.windows.net.
+		-Database Name: The name of your database (e.g., wv-temperature-db).
+		-Authentication Type: SQL Login.
+		-Username: Admin username you created earlier.
+		-Password: Admin password you set.
+	- Save this profile to use it for future connections.
+- Run Queries from VS Code:
+	- In the SQL Server extension, you can run queries directly in VS Code to interact with your Azure SQL database. Right-click on the database name and select New Query to try it out.
 
-### Step 1: Set Up a Node.js and Express Backend
-- In the backend folder, initialize a Node.js project:
-```bash
-npm init -y
-```
-- Install dependencies:
-```bash
-npm install express mssql bcryptjs jsonwebtoken dotenv cookie-parser cors
-```
-### Step 2: Configure Database Connection
+### Step 4: Configure Database Connection in Backend
+Now that the Azure SQL database is set up, we’ll configure our backend to connect to it using the mssql package.
 - In the backend directory, create a file called .env and add your database credentials:
-
 ```env
 DB_USER=<your-db-username>
 DB_PASSWORD=<your-db-password>
@@ -132,21 +150,26 @@ DB_DATABASE=<your-database-name>
 JWT_SECRET=<your-secret-key>
 ```
 - Create a config.js file to connect to the database:
-
-- This file should include the database configuration and connectDB function as per config.js documentation.
-### Step 3: Implement Authentication Routes
+	- This file should include the database configuration and connectDB function as per config.js documentation.
+- Test the connection by running the server:
+```bash
+node index.js
+```
+You should see “Connected to Azure SQL Database” in the console if the connection is successful.
+### Step 5: Implement Authentication Routes
 - In the routes folder, create auth.js to define the routes for registration and login.
 - Set up bcrypt for hashing passwords and JWT for token-based authentication. Refer to the auth.js documentation for detailed route definitions.
-### Step 4: Set Up Middleware
+### Step 6: Set Up Middleware
 - In the middleware folder, create authMiddleware.js to verify JWT tokens and protect specific routes.
 - Ensure protected routes include this middleware to check for a valid token before granting access.
-### Step 5: Run the Backend
+### Step 7: Run the Backend
 - In the terminal, navigate to the backend folder.
 - Start the server:
 ```bash
 node index.js
 ```
 - Confirm the backend is running by checking for a “Server running on port” message in the terminal.
+
 ## 4. Integrating Frontend and Backend
 ### Step 1: Set Up CORS
 - To allow the frontend to communicate with the backend, configure CORS in index.js:
@@ -166,9 +189,18 @@ axios.post('http://localhost:5000/auth/login', { username, password }, { withCre
 ### Step 4: Access the Application
 - Open http://localhost:3000 in your browser.
 - Register a new user, log in, and verify that you can view the map and logout successfully.
+	- For registration, send a username and password to /auth/register.
+	- For login, send the same username and password to /auth/login to receive a JWT upon successful authentication.
+- Confirm Data in Database:
+	- After registering a new user, go back to VS Code or the Azure portal and query the Users table to see the new entry.
+	- Run:
+```sql
+SELECT * FROM Users;
+```
+You should see the new user with their hashed password stored in the table.
+
 ## 5. Running the Complete Application
 To run the full application with both frontend and backend:
-
 - Start the backend:
 ```bash
 cd backend
