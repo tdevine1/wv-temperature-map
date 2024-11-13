@@ -149,6 +149,13 @@ DB_SERVER=<your-db-server>
 DB_DATABASE=<your-database-name>
 JWT_SECRET=<your-secret-key>
 ```
+- Open (or create) a .gitignore file in the root of your project directory.
+- Add the .env file to .gitignore so Git won’t track it:
+```plaintext
+# Environment variables
+.env
+```
+- Save the .gitignore file. Now, Git will ignore the .env file and won’t include it in commits to keep it secret.
 - Create a config.js file to connect to the database:
 	- This file should include the database configuration and connectDB function as per config.js documentation.
 - Test the connection by running the server:
