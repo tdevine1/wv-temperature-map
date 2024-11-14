@@ -28,17 +28,20 @@ function MapComponent({ temperatures = [] }) {
      * getColor
      * 
      * Determines the color for the marker based on temperature.
+     * Provides a gradient for better visualization.
      * 
      * @function
      * @param {number} tavg - The average temperature value.
      * @returns {string} Color code for the marker.
      */
     const getColor = (tavg) => {
-        if (tavg < 32) return "#0000FF";  // Freezing and below (blue)
-        if (tavg < 50) return "#ADD8E6";  // Cool (light blue)
-        if (tavg < 70) return "#FFFF00";  // Moderate (yellow)
-        if (tavg < 90) return "#FFA500";  // Warm (orange)
-        return "#FF0000";                // Hot (red)
+        if (tavg < 0) return "#002366";      // Very cold (dark blue)
+        if (tavg < 20) return "#4169E1";     // Cold (royal blue)
+        if (tavg < 40) return "#87CEEB";     // Cool (sky blue)
+        if (tavg < 60) return "#FFFF66";     // Mild (light yellow)
+        if (tavg < 80) return "#FFD700";     // Warm (gold)
+        if (tavg < 100) return "#FF4500";    // Hot (orange-red)
+        return "#B22222";                    // Very hot (firebrick red)
     };
 
     return (
@@ -47,13 +50,14 @@ function MapComponent({ temperatures = [] }) {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             />
-            {Array.isArray(temperatures) && temperatures.map((point, index) => (
+             {Array.isArray(temperatures) && temperatures.map((point, index) => (
                 <CircleMarker
                     key={index}
                     center={[point.latitude, point.longitude]}
-                    radius={5}
+                    radius={4} // Reduced radius for less overlap
                     color={getColor(point.tavg)}
-                    fillOpacity={0.6}
+                    fillOpacity={0.4} // Increased transparency
+                    stroke={false} // Removes the marker border for cleaner look
                 >
                     <Popup>
                         <div>

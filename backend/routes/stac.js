@@ -20,7 +20,7 @@ router.get('/temperature-data', (req, res) => {
     }
 
     // Execute the Python script with the specified date
-    exec(`python3 get_temperature_data.py ${date}`, (error, stdout, stderr) => {
+    exec(`python3 get_temperature_data.py ${date}`, { maxBuffer: 10 * 1024 * 1024 }, (error, stdout, stderr) => {
         if (error) {
             console.error(`Execution error: ${error.message}`);
             return res.status(500).json({
