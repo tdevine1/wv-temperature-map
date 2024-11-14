@@ -2,7 +2,7 @@
  * App.js
  * 
  * Main entry point of the application with persistent authentication using local storage.
- * It sets up routing for the login/register page and the map page, and manages authentication state.
+ * It sets up routing for the login, register, and map pages, and manages authentication state.
  */
 
 import React, { useState, useEffect } from 'react';
@@ -29,26 +29,44 @@ function App() {
   return (
     <Router>
       <Routes>
+        {/* Redirect to /login if not authenticated; otherwise to /map */}
         <Route
           path="/"
+          element={<Navigate to={authenticated ? "/map" : "/login"} replace />}
+        />
+
+        {/* Login Route */}
+        <Route
+          path="/login"
           element={
             authenticated ? (
-              <Navigate to="/map" />
+              <Navigate to="/map" replace />
             ) : (
-              <>
-                <Login setAuthenticated={setAuthenticated} />
-                <Register />
-              </>
+              <Login setAuthenticated={setAuthenticated} />
             )
           }
         />
+
+        {/* Register Route */}
+        <Route
+          path="/register"
+          element={
+            authenticated ? (
+              <Navigate to="/map" replace />
+            ) : (
+              <Register />
+            )
+          }
+        />
+
+        {/* Map Page Route */}
         <Route
           path="/map"
           element={
             authenticated ? (
               <MapPage setAuthenticated={setAuthenticated} />
             ) : (
-              <Navigate to="/" />
+              <Navigate to="/login" replace />
             )
           }
         />

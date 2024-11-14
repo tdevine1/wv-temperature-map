@@ -7,7 +7,7 @@
 
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 /**
  * Login component allows users to enter credentials to access the app.
@@ -15,32 +15,35 @@ import { useNavigate } from 'react-router-dom';
  * @returns {JSX.Element} The login form.
  */
 const Login = ({ setAuthenticated }) => {
-  // State variables to store the user's input for username and password
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
-  // useNavigate hook for programmatic navigation after successful login
   const navigate = useNavigate();
 
   /**
+   * handleSubmit
+   * 
    * Handles form submission by sending credentials to the backend for verification.
+   * Updates authentication state and navigates to the map page upon success.
+   * 
    * @param {Object} e - Event object from the form submission.
+   * @async
+   * @function
    */
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      // Send a POST request with username and password to backend
       const response = await axios.post(
         'http://localhost:5000/auth/login',
         { username, password },
-        { withCredentials: true } // Allows cookies to be sent with the request
+        { withCredentials: true }
       );
 
-      // If login is successful, update the authentication status and navigate to the map page
       if (response.data.message === 'Login successful') {
         setAuthenticated(true);
-        navigate('/map');
+        navigate('/'); // Redirect to main page
+      } else {
+        alert('Login failed. Please check your credentials.');
       }
     } catch (error) {
       console.error('Login failed:', error);
@@ -49,24 +52,29 @@ const Login = ({ setAuthenticated }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', maxWidth: '300px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', maxWidth: '300px' }}>
       <h2>Login</h2>
-      {/* Input for username */}
-      <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      {/* Input for password */}
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button type="submit">Login</button>
-    </form>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button type="submit">Login</button>
+      </form>
+
+      {/* Link to the Register page */}
+      <p style={{ marginTop: '10px' }}>
+        Don’t have an account? <Link to="/register">Register here</Link>
+      </p>
+    </div>
   );
 };
 

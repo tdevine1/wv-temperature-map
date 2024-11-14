@@ -1,38 +1,51 @@
 const express = require('express');
-const axios = require('axios');
 const router = express.Router();
-
-// Planetary Computer STAC endpoint
-const STAC_API_URL = 'https://planetarycomputer.microsoft.com/api/stac/v1/search';
+const { exec } = require('child_process');
 
 /**
- * Fetch temperature data for a specific date from STAC API.
- * @route GET /api/temperature/:date
- * @param {string} date - Date for the temperature data in YYYY-MM-DD format.
+ * GET /api/temperature-data
+ * 
+ * Retrieves temperature data for a specified date by executing the Python script.
+ * 
+ * @param {string} req.query.date - The date (YYYY-MM-DD) for data retrieval.
+ * @returns {JSON} JSON response containing temperature data (latitude, longitude, tavg).
  */
-router.get('/:date', async (req, res) => {
-  const date = req.params.date;
-  const bbox = [-82.6447, 37.2015, -77.7195, 40.6388]; // WV bounds
+router.get('/temperature-data', (req, res) => {
+    const date = req.query.date;
 
-  try {
-    const response = await axios.post(STAC_API_URL, {
-      bbox: bbox,
-      datetime: `${date}T00:00:00Z/${date}T23:59:59Z`,
-      collections: ["goes-lst"],
-      limit: 100
+    // Validate date parameter format (YYYY-MM-DD)
+    const isValidDate = /^\d{4}-\d{2}-\d{2}$/.test(date);
+    if (!date || !isValidDate) {
+        return res.status(400).json({ error: 'Invalid date format. Expected format: YYYY-MM-DD' });
+    }
+
+    // Execute the Python script with the specified date
+    exec(`python3 get_temperature_data.py ${date}`, (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Execution error: ${error.message}`);
+            return res.status(500).json({
+                error: 'Failed to execute temperature data retrieval script',
+                details: error.message
+            });
+        }
+
+        if (stderr) {
+            console.warn(`Script warning output: ${stderr}`);  // Log any warnings to console but don’t treat as fatal
+        }
+
+        try {
+            // Parse JSON output from the Python script
+            const data = JSON.parse(stdout);
+            res.json(data);
+        } catch (parseError) {
+            console.error(`JSON parsing error: ${parseError}`);
+            console.error(`Raw script output: ${stdout}`);  // Log raw output for debugging
+            res.status(500).json({
+                error: 'Failed to parse temperature data',
+                details: parseError.message
+            });
+        }
     });
-
-    const temperatureData = response.data.features.map(feature => ({
-      lat: feature.geometry.coordinates[1],
-      lon: feature.geometry.coordinates[0],
-      temperature: feature.properties.temperature
-    }));
-
-    res.json(temperatureData);
-  } catch (error) {
-    console.error("Error fetching temperature data:", error);
-    res.status(500).json({ error: 'Failed to retrieve temperature data' });
-  }
 });
 
 module.exports = router;
