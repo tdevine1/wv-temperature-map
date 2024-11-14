@@ -52,7 +52,3 @@ routes/
 ├── stac.js               # Data retrieval from NOAA and Planetary Computer
 └── README.md             # Documentation for routes folder
 ```
-
-### Conclusion
-
-The `routes` folder centralizes API route management, improving the **cohesion** and **modularity** of the backend. By separating authentication and data retrieval routes into dedicated files, the backend achieves a more **loosely coupled** and maintainable structure. Middleware in routes ensures **separation of concerns** by handling tasks like validation and logging outside of the main route logic, promoting clean code practices and enhancing security.

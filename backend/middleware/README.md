@@ -68,7 +68,3 @@ middleware/
 ├── loggingMiddleware.js       # Logs request and error details
 └── README.md                  # Documentation for middleware folder
 ```
-
-## Conclusion
-
-Middleware functions in the `middleware` folder allow the application to adhere to **good software engineering practices** by promoting **Separation of Concerns** and **modularity**. They provide a centralized way to handle repeated tasks (like validation and logging) across different routes, following the **Open-Closed Principle** and reducing the need for repetitive code. Through middleware, the application can maintain secure, clean, and efficient backend operations.
