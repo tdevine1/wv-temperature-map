@@ -228,39 +228,36 @@ npm start
 - Access the application at http://localhost:3000.
 
 ## Notes on JWT Usage for Security
-In your application, the JWT (JSON Web Token) is being used to manage user sessions and authenticate requests between the frontend and backend. Here’s how the JWT is typically being used:
+The JWT (JSON Web Token) is used to manage user sessions and authenticate requests between the frontend and backend. 
 
-JWT Creation on Login:
+### JWT Creation on Login:
+- When a user logs in, the backend verifies the user's credentials.
+- If the credentials are correct, the backend creates a JWT that contains user information (like the user ID) and signs it with a secret key stored in your .env file (e.g., JWT_SECRET).
+- The JWT is then sent to the user in an HTTP-only cookie, which prevents client-side JavaScript from accessing the token, enhancing security.
+- The JWT is stored in an HTTP-only cookie, which is sent automatically with each request made by the client to the backend.
+- This cookie-based approach protects the token from JavaScript-based attacks like XSS (Cross-Site Scripting), as only the server can access it.
 
-When a user logs in, the backend verifies the user's credentials.
-If the credentials are correct, the backend creates a JWT that contains user information (like the user ID) and signs it with a secret key stored in your .env file (e.g., JWT_SECRET).
-The JWT is then sent to the user in an HTTP-only cookie, which prevents client-side JavaScript from accessing the token, enhancing security.
-Example JWT creation during login:
+### JWT Verification on Subsequent Requests:
+- For any subsequent requests to protected routes, the backend checks the cookie for the JWT.
+	- If the JWT is present, the backend verifies the token using the JWT_SECRET to ensure it’s valid.
+	- If the JWT is valid, the backend grants access to the requested resource.
 
-The JWT is stored in an HTTP-only cookie, which is sent automatically with each request made by the client to the backend.
-This cookie-based approach protects the token from JavaScript-based attacks like XSS (Cross-Site Scripting), as only the server can access it.
-JWT Verification on Subsequent Requests:
-
-For any subsequent requests to protected routes, the backend checks the cookie for the JWT.
-If the JWT is present, the backend verifies the token using the JWT_SECRET to ensure it’s valid.
-If the JWT is valid, the backend grants access to the requested resource.
-
-Logging Out:
-
-To log the user out, the backend can clear the JWT cookie by setting it to an empty value, effectively ending the session.
-The frontend can call a logout endpoint, and the backend clears the cookie:
-javascript
-Copy code
+### Logging Out:
+- To log the user out, the backend can clear the JWT cookie by setting it to an empty value, effectively ending the session.
+- The frontend can call a logout endpoint, and the backend clears the cookie:
+```javascript
 res.clearCookie('token').json({ message: 'Logout successful' });
-JWT Flow Summary
-Login: User logs in → JWT created and sent in an HTTP-only cookie.
-Authenticated Requests: JWT in the cookie is sent with each request to authenticate the user.
-Protected Routes: Backend verifies the JWT before granting access to protected routes.
-Logout: JWT cookie is cleared on logout, ending the user session.
-Benefits of JWT for Your Application
-Stateless Authentication: JWTs make the session stateless, as the backend does not need to store session data. It only verifies the token on each request.
-Secure Storage: Using an HTTP-only cookie prevents JavaScript access, reducing the risk of token theft via XSS.
-Flexibility: JWTs can include claims (like user role) that authorize different levels of access.
+```
+### JWT Flow Summary
+1. Login: User logs in → JWT created and sent in an HTTP-only cookie.
+2. Authenticated Requests: JWT in the cookie is sent with each request to authenticate the user.
+3. Protected Routes: Backend verifies the JWT before granting access to protected routes.
+4. Logout: JWT cookie is cleared on logout, ending the user session.
+
+### Benefits of JWT for Your Application
+- Stateless Authentication: JWTs make the session stateless, as the backend does not need to store session data. It only verifies the token on each request.
+- Secure Storage: Using an HTTP-only cookie prevents JavaScript access, reducing the risk of token theft via XSS.
+- Flexibility: JWTs can include claims (like user role) that authorize different levels of access.
 
 ## Full Code Reference
 - Frontend Components: Detailed documentation and code can be found in App.js, Login.js, Register.js, MapPage.js, and MapComponent.js.
