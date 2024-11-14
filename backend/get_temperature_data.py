@@ -17,7 +17,7 @@ STAC_API_URL = "https://planetarycomputer.microsoft.com/api/stac/v1"
 COLLECTION_ID = "noaa-nclimgrid-monthly"
 """BBOX = [-82.644739, 37.201483, -77.719519, 40.638801]  # Bounding box for West Virginia"""
 BBOX = [-125.0, 24.396308, -66.93457, 49.384358]  # Approximate bounding box for the contiguous USA
-MAX_POINTS = 1000000  # Maximum number of points to process
+MAX_POINTS = 100000  # Maximum number of points to process
 
 def get_tavg_data(da, x, y):
     """
