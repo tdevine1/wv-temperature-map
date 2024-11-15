@@ -1,45 +1,80 @@
 /**
  * DateSelector.js
  * 
- * Component for selecting a date and triggering data fetch based on that date.
+ * React component for selecting a month and year to specify a date in the format 'YYYY-MM'.
+ * Uses dropdowns to limit user input, ensuring only valid months and years are selected.
+ * Provides a button to trigger data fetching for the selected date.
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 
 /**
- * DateSelector component
+ * DateSelector component for selecting a month and year.
  * 
- * Allows user to select a date and fetch data for that specific date.
- * @param {string} date - The selected date in the format YYYY-MM-DD.
- * @param {Function} setDate - Function to update the date state in MapPage.
- * @param {Function} fetchTemperatureData - Function to fetch temperature data based on selected date.
- * @returns {JSX.Element} Rendered DateSelector component.
+ * @component
+ * @param {Function} onDateChange - Function to update the selected date in the parent component.
+ * @param {Function} fetchTemperatureData - Function to fetch temperature data based on the selected date.
+ * @returns {JSX.Element} A date selector with month and year dropdowns and a fetch button.
  */
-const DateSelector = ({ date, setDate, fetchTemperatureData }) => {
+function DateSelector({ onDateChange, fetchTemperatureData }) {
+  const [month, setMonth] = useState('');
+  const [year, setYear] = useState('');
+
+  // Define the range of years (1951 to the current year)
+  const currentYear = new Date().getFullYear();
 
   /**
-   * handleDateChange
+   * handleMonthChange
    * 
-   * Updates the date when a new date is selected from the input.
+   * Updates the selected month and triggers the onDateChange function if both month and year are selected.
    * 
-   * @param {Object} e - Event object from date input.
+   * @param {Object} e - The change event triggered by the month dropdown.
    */
-  const handleDateChange = (e) => {
-    setDate(e.target.value);  // Update date state in MapPage
+  const handleMonthChange = (e) => {
+    setMonth(e.target.value);
+    if (year) onDateChange(`${year}-${e.target.value}-01`);
+  };
+
+  /**
+   * handleYearChange
+   * 
+   * Updates the selected year and triggers the onDateChange function if both month and year are selected.
+   * 
+   * @param {Object} e - The change event triggered by the year dropdown.
+   */
+  const handleYearChange = (e) => {
+    setYear(e.target.value);
+    if (month) onDateChange(`${e.target.value}-${month}-01`);
   };
 
   return (
     <div>
-      {/* Date input field */}
-      <input
-        type="date"
-        value={date}
-        onChange={handleDateChange}
-      />
-      {/* Button to fetch data for selected date */}
-      <button onClick={fetchTemperatureData}>Get Temperature Data</button>
+      {/* Month Dropdown */}
+      <label>Month:</label>
+      <select value={month} onChange={handleMonthChange}>
+        <option value="" disabled>Select month</option>
+        {Array.from({ length: 12 }, (_, i) => (
+          <option key={i + 1} value={String(i + 1).padStart(2, '0')}>
+            {new Date(0, i).toLocaleString('en', { month: 'long' })}
+          </option>
+        ))}
+      </select>
+
+      {/* Year Dropdown */}
+      <label>Year:</label>
+      <select value={year} onChange={handleYearChange}>
+        <option value="" disabled>Select year</option>
+        {Array.from({ length: currentYear - 1951 + 1 }, (_, i) => (
+          <option key={i} value={1951 + i}>
+            {1951 + i}
+          </option>
+        ))}
+      </select>
+
+      {/* Fetch Data Button */}
+      <button onClick={fetchTemperatureData}>Fetch Data</button>
     </div>
   );
-};
+}
 
 export default DateSelector;

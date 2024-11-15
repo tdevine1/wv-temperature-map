@@ -56,7 +56,7 @@ function MapComponent({ temperatures = [] }) {
                     center={[point.latitude, point.longitude]}
                     radius={4} // Reduced radius for less overlap
                     color={getColor(point.tavg)}
-                    fillOpacity={0.4} // Increased transparency
+                    fillOpacity={0.2} // Increased transparency
                     stroke={false} // Removes the marker border for cleaner look
                 >
                     <Popup>
