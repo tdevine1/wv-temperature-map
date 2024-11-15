@@ -3,6 +3,7 @@ get_temperature_data.py
 
 This script retrieves average temperature data (tavg) from the NOAA NClimGrid collection 
 on the Microsoft Planetary Computer for a specified date within a bounding box around West Virginia.
+This code is adapted from https://github.com/microsoft/PlanetaryComputerExamples/blob/main/datasets/noaa-nclimgrid/noaa-nclimgrid-example.ipynb
 """
 
 import sys
