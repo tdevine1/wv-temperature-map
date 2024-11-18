@@ -20,8 +20,9 @@ function DateSelector({ onDateChange, fetchTemperatureData }) {
   const [month, setMonth] = useState('');
   const [year, setYear] = useState('');
 
-  // Define the range of years (1951 to the current year)
-  const currentYear = new Date().getFullYear();
+  // Define the range of years (1951-2022 for the nclimgrid_monthly data)
+  const endYear = 2022;
+  const startYear = 1951;
 
   /**
    * handleMonthChange
@@ -64,9 +65,9 @@ function DateSelector({ onDateChange, fetchTemperatureData }) {
       <label>Year:</label>
       <select value={year} onChange={handleYearChange}>
         <option value="" disabled>Select year</option>
-        {Array.from({ length: currentYear - 1951 + 1 }, (_, i) => (
-          <option key={i} value={1951 + i}>
-            {1951 + i}
+        {Array.from({ length: endYear - startYear + 1 }, (_, i) => (
+          <option key={i} value={startYear + i}>
+            {startYear + i}
           </option>
         ))}
       </select>

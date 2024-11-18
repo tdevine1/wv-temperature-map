@@ -21,7 +21,7 @@ import axios from 'axios';
  * @returns {JSX.Element} The rendered map page with temperature markers, a logout button, and a loading indicator.
  */
 function MapPage({ setAuthenticated }) {
-  const [date, setDate] = useState('');  // Date state
+  const [date, setDate] = useState('');
   const [temperatureData, setTemperatureData] = useState([]);
   const [isLoading, setIsLoading] = useState(false); 
   const navigate = useNavigate();

@@ -17,9 +17,21 @@ import math  # Import math to check for NaN
 STAC_API_URL = "https://planetarycomputer.microsoft.com/api/stac/v1"
 COLLECTION_ID = "noaa-nclimgrid-monthly"
 """BBOX = [-82.644739, 37.201483, -77.719519, 40.638801]  # Bounding box for West Virginia"""
-BBOX = [-85.0, 35.0, -75.0, 42.0]  # Bounding box for West Virginia and surrounding area
-"""BBOX = [-125.0, 24.396308, -66.93457, 49.384358]  # Approximate bounding box for the contiguous USA"""
-MAX_POINTS = 50000  # Maximum number of points to process
+"""BBOX = [-85.0, 35.0, -75.0, 42.0]  # Bounding box for West Virginia and surrounding area"""
+BBOX = [-125.0, 24.396308, -66.93457, 49.384358]  # Approximate bounding box for the contiguous USA
+MAX_POINTS = 500000  # Maximum number of points to process
+
+def celsius_to_fahrenheit(celsius):
+    """
+    Converts a temperature from Celsius to Fahrenheit.
+    
+    Args:
+        celsius (float): Temperature in Celsius.
+        
+    Returns:
+        float: Temperature in Fahrenheit.
+    """
+    return (celsius * 9 / 5) + 32
 
 def get_tavg_data(da, x, y):
     """
@@ -36,7 +48,7 @@ def get_tavg_data(da, x, y):
     try:
         # Assuming the tavg value is in the first band (update if necessary)
         tavg_value = da.isel(band=0, x=x, y=y).values.item()
-        return tavg_value if not math.isnan(tavg_value) else None
+        return celsius_to_fahrenheit(tavg_value) if not math.isnan(tavg_value) else None
     except IndexError:
         return None
 
@@ -69,7 +81,7 @@ def get_temperature_data(date):
 
     print("Data item found. Verifying it falls within the bounding box and loading dataset...", file=sys.stderr)
     item = items[0]
-    asset_key = "monthly" if "monthly" in item.assets else list(item.assets.keys())[0]
+    asset_key = list(item.assets.keys())[1]
     signed_href = sign(item.assets[asset_key].href)
 
     da = rioxarray.open_rasterio(signed_href)

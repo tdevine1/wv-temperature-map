@@ -23,6 +23,9 @@ import 'leaflet/dist/leaflet.css';
  */
 function MapComponent({ temperatures = [] }) {
     const center = [38.5976, -80.4549]; // Center of WV
+    const marker_radius = 10;
+    const marker_fillOpacity = 0.4;
+
 
     /**
      * getColor
@@ -54,9 +57,9 @@ function MapComponent({ temperatures = [] }) {
                 <CircleMarker
                     key={index}
                     center={[point.latitude, point.longitude]}
-                    radius={4} // Reduced radius for less overlap
+                    radius={marker_radius}
                     color={getColor(point.tavg)}
-                    fillOpacity={0.2} // Increased transparency
+                    fillOpacity={marker_fillOpacity}
                     stroke={false} // Removes the marker border for cleaner look
                 >
                     <Popup>
