@@ -39,7 +39,7 @@ router.get('/temperature-data', (req, res) => {
             res.json(data);
         } catch (parseError) {
             console.error(`JSON parsing error: ${parseError}`);
-            console.error(`Raw script output: ${stdout}`);  // Log raw output for debugging
+            // console.error(`Raw script output: ${stdout}`);  // Log raw output for debugging
             res.status(500).json({
                 error: 'Failed to parse temperature data',
                 details: parseError.message
