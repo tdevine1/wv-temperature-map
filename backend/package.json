@@ -14,7 +14,9 @@
     "cookie-parser": "^1.4.7",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
+    "git": "^0.1.5",
     "jsonwebtoken": "^9.0.2",
-    "mssql": "^11.0.1"
+    "mssql": "^11.0.1",
+    "rm": "^0.1.8"
   }
 }
