@@ -68,7 +68,7 @@ node -v
 npm -v
 ```
 ### Step 2: Set Up the React App
-- Create a folder in the root directory called 'frontend' with 1 subfolders called 'src'
+- Create a folder in the root directory called `frontend` with 1 subfolders called `src`
 - Navigate to the src folder.
 
 ```bash
@@ -87,7 +87,7 @@ Refer to the following structure for setting up each component:
 - Register.js: A registration form for new users.
 - MapPage.js: Displays the map and logout option.
 - MapComponent.js: Renders the Leaflet map and places markers.
-- Important: Use the provided detailed documentation in each component to understand each part's purpose and function.
+- Important: Use the provided detailed documentation in each component to understand each part`s purpose and function.
 
 ### Step 4: Run the Frontend
 - In the terminal, navigate to the src folder.
@@ -104,7 +104,7 @@ npm start
 In this section, we’ll set up the backend on VSCode, create and initialize an Azure SQL Database, configure VS Code to connect to the database, and set up the backend to use the Azure SQL connection. The backend is a Node.js application located in the backend/ folder. It serves API endpoints to fetch temperature data.
 
 ### Step 1: Set Up a Node.js and Express Backend
-- Create a folder called 'backend' with 2 subfolders called 'routes' and 'middleware'
+- Create a folder called `backend` with 2 subfolders called `routes` and `middleware`
 - In the backend folder, initialize a Node.js project:
 ```bash
 cd .\backend
@@ -184,7 +184,7 @@ JWT_SECRET=<your-secret-key>
 
 - To generate a string for the JWT secret, run
 ```javascript
-node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
+node -e "console.log(require(`crypto`).randomBytes(32).toString(`base64`))"
 ```
 
 - Open (or create) a .gitignore file in the root of your project directory.
@@ -226,12 +226,12 @@ curl http://localhost:5000/api/temperature/temperature-data?date=1950-01-01
 - To allow the frontend to communicate with the backend, configure CORS in index.js:
 
 ```javascript
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+app.use(cors({ origin: `http://localhost:3000`, credentials: true }));
 ```
 ### Step 2: Modify Frontend API Requests
 - In both Login.js and Register.js, update axios requests to include withCredentials:
 ```javascript
-axios.post('http://localhost:5000/auth/login', { username, password }, { withCredentials: true })
+axios.post(`http://localhost:5000/auth/login`, { username, password }, { withCredentials: true })
 ```
 - This enables the browser to send cookies, which are necessary for maintaining sessions with JWT.
 ### Step 3: Testing the Integration
@@ -258,7 +258,7 @@ To run the entire application (both frontend and backend) seamlessly, you need t
 ### Step 1. Configure the Root-Level package.json
 The root-level package.json acts as the orchestrator for both the frontend and backend. It includes scripts to install dependencies and start both services.
 
-Create a package.json File (if it doesn't already exist): Run the following command to initialize the file:
+Create a package.json File (if it doesn`t already exist): Run the following command to initialize the file:
 
 ```bash
 npm init -y
@@ -321,7 +321,7 @@ npm run start
 The JWT (JSON Web Token) is used to manage user sessions and authenticate requests between the frontend and backend. 
 
 ### JWT Creation on Login:
-- When a user logs in, the backend verifies the user's credentials.
+- When a user logs in, the backend verifies the user`s credentials.
 - If the credentials are correct, the backend creates a JWT that contains user information (like the user ID) and signs it with a secret key stored in your .env file (e.g., JWT_SECRET).
 - The JWT is then sent to the user in an HTTP-only cookie, which prevents client-side JavaScript from accessing the token, enhancing security.
 - The JWT is stored in an HTTP-only cookie, which is sent automatically with each request made by the client to the backend.
@@ -336,7 +336,7 @@ The JWT (JSON Web Token) is used to manage user sessions and authenticate reques
 - To log the user out, the backend can clear the JWT cookie by setting it to an empty value, effectively ending the session.
 - The frontend can call a logout endpoint, and the backend clears the cookie:
 ```javascript
-res.clearCookie('token').json({ message: 'Logout successful' });
+res.clearCookie(`token`).json({ message: `Logout successful` });
 ```
 ### JWT Flow Summary
 1. Login: User logs in → JWT created and sent in an HTTP-only cookie.
@@ -354,14 +354,14 @@ res.clearCookie('token').json({ message: 'Logout successful' });
 - Backend Components: Refer to index.js, config.js, auth.js, and authMiddleware.js.
 
 ## Directory Structure
-### Root Directory
-- frontend/: React.js application (Frontend)
-- backend/: Node.js API server (Backend)
-- package.json: Manages the root-level scripts and dependencies for running both services together.
+### Root Directory`
+- `frontend/`: React.js application (Frontend)
+- `backend/`: Node.js API server (Backend)
+- `package.json`: Manages the root-level scripts and dependencies for running both services together.
 ### Frontend
-- src/: React application source code.
-- public/: Static assets like index.html.
+- `src/`: React application source code.
+- `public/`: Static assets like index.html.
 ### Backend
-- index.js: Backend server entry point.
-- middleware/: Authentication middleware.
-- routes/: API routes.
+- `index.js`: Backend server entry point.
+- `middleware/`: Authentication middleware.
+- `routes/`: API routes.
