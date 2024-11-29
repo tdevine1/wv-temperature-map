@@ -8,6 +8,7 @@ frontend/
 ├── public/
 ├── src/
 └── package.json
+```
 
 ## Overview of Files and Subdirectories
 - `public/`: contains the main HTML file
