@@ -1,5 +1,5 @@
 # WV Temperature Map Project Setup Guide
-This tutorial will guide you through the entire setup process for the WV Temperature Map project. We’ll start by setting up VS Code to connect to GitHub, proceed with the frontend and backend setup, and finish by integrating both parts to run the application as a cohesive whole.
+This guide walks you through setting up, running, and understanding the structure of the WV Temperature Map application. The tutorial assumes you are working locally with Visual Studio Code (VS Code) and GitHub.
 
 ---
 ## Table of Contents
@@ -11,8 +11,6 @@ This tutorial will guide you through the entire setup process for the WV Tempera
 ---
 
 ## 1. Setting Up VS Code with GitHub
-To start developing with GitHub in VS Code, follow these steps to set up Git, connect to your GitHub repository, and clone the project.
-
 ### Step 1: Install Git
 - Download Git from https://git-scm.com/downloads.
 - Run the installer and select the option to Add Git to your PATH.
@@ -37,7 +35,31 @@ https://github.com/tdevine1/wv-temperature-map
 git remote -v
 ```
 - You should see the GitHub repository URL.
+
+Clone the Repository:
+- Open the terminal in VS Code and clone the repository:
+
+```bash
+git clone https://github.com/tdevine1/wv-temperature-map.git
+cd wv-temperature-map
+```
+Install Dependencies Globally:
+- Ensure you have concurrently installed to manage running both frontend and backend:
+```bash
+npm install -g concurrently
+```
+Open the Project in VS Code:
+
+Run:
+```bash
+code .
+```
+The project structure should now be visible in the VS Code Explorer.
+
+---
+
 ## 2. Frontend Setup
+The frontend is a React.js application located in the frontend/ folder.
 ### Step 1: Install Node.js and npm
 - Download and install Node.js from https://nodejs.org/ (use the LTS version).
 - Verify the installation in your terminal:
@@ -46,7 +68,12 @@ node -v
 npm -v
 ```
 ### Step 2: Set Up the React App
-- In VS Code, navigate to the src folder.
+- Create a folder in the root directory called 'frontend' with 1 subfolders called 'src'
+- Navigate to the src folder.
+
+```bash
+cd .\frontend\src
+```
 - Run the following commands to install React and necessary dependencies:
 ```bash
 npx create-react-app .
@@ -69,14 +96,18 @@ Refer to the following structure for setting up each component:
 npm start
 ```
 - Open your browser and go to http://localhost:3000 to verify the frontend.
+	- Ensure the date selector and map components load without errors.
+
+---
 
 ## 3. Backend Setup
-In this section, we’ll set up the backend on VSCode, create and initialize an Azure SQL Database, configure VS Code to connect to the database, and set up the backend to use the Azure SQL connection.
+In this section, we’ll set up the backend on VSCode, create and initialize an Azure SQL Database, configure VS Code to connect to the database, and set up the backend to use the Azure SQL connection. The backend is a Node.js application located in the backend/ folder. It serves API endpoints to fetch temperature data.
 
 ### Step 1: Set Up a Node.js and Express Backend
-- Create a folder in src called 'backend' with 2 subfolders called 'routes' and 'middleware'
+- Create a folder called 'backend' with 2 subfolders called 'routes' and 'middleware'
 - In the backend folder, initialize a Node.js project:
 ```bash
+cd .\backend
 npm init -y
 ```
 - Install dependencies:
@@ -183,6 +214,12 @@ You should see “Connected to Azure SQL Database” in the console if the conne
 node index.js
 ```
 - Confirm the backend is running by checking for a “Server running on port” message in the terminal.
+	- Use a tool like Postman or curl to test the /api/temperature/temperature-data endpoint:
+```bash
+curl http://localhost:5000/api/temperature/temperature-data?date=1950-01-01
+```
+
+---
 
 ## 4. Integrating Frontend and Backend
 ### Step 1: Set Up CORS
@@ -213,19 +250,72 @@ SELECT * FROM Users;
 ```
 You should see the new user with their hashed password stored in the table.
 
+---
+
 ## 5. Running the Complete Application
-To run the full application with both frontend and backend:
-- Start the backend:
+To run the entire application (both frontend and backend) seamlessly, you need to configure the root-level package.json file to manage scripts that start both services simultaneously. This section will guide you through setting up and running the complete application effectively.
+
+### Step 1. Configure the Root-Level package.json
+The root-level package.json acts as the orchestrator for both the frontend and backend. It includes scripts to install dependencies and start both services.
+
+Create a package.json File (if it doesn't already exist): Run the following command to initialize the file:
+
 ```bash
-cd backend
-node index.js
+npm init -y
 ```
-- Start the frontend:
+
+Edit the package.json file to add the following scripts:
+
+```json
+{
+  "name": "wv-temperature-map",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start:frontend": "npm --prefix frontend start",
+    "start:backend": "npm --prefix backend start",
+    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+    "install:frontend": "npm install --prefix frontend",
+    "install:backend": "npm install --prefix backend",
+    "build:frontend": "npm run build --prefix frontend",
+    "deploy": "npm run install:frontend && npm run install:backend && npm run build:frontend && npm run start"
+  },
+  "dependencies": {
+    "concurrently": "^7.0.0"
+  }
+}
+
+```
+- scripts: Defines command-line scripts that can be run using npm run <script-name>.
+- start:frontend and start:backend: Start the respective frontend or backend projects.
+- start: Combines the two start scripts, so both services run simultaneously.
+- install:frontend and install:backend: Target the package.json files in the respective subdirectories to install dependencies.
+- build:frontend: Prepares the frontend for production deployment.
+- deploy: A convenience script for production deployment. It installs dependencies, builds the frontend, and starts both services.
+
+Install the concurrently package, which allows the backend and frontend to run in parallel during development or deployment.
+
 ```bash
-cd src
-npm start
+npm install
 ```
-- Access the application at http://localhost:3000.
+
+### Step 2. Running the Application
+With the package.json scripts set up, running the application becomes straightforward.
+
+- Start both the frontend and backend simultaneously:
+
+```bash
+npm run start
+```
+
+	- This command uses concurrently to:
+		- Start the backend on http://localhost:5000
+		- Start the frontend on http://localhost:3000
+
+- Verify the Application:
+	- Open your browser and navigate to http://localhost:3000.
+	- Use the date selector to query temperature data.
+	- Confirm that the heatmap is displayed with the fetched data.
 
 ## Notes on JWT Usage for Security
 The JWT (JSON Web Token) is used to manage user sessions and authenticate requests between the frontend and backend. 
@@ -262,3 +352,16 @@ res.clearCookie('token').json({ message: 'Logout successful' });
 ## Full Code Reference
 - Frontend Components: Detailed documentation and code can be found in App.js, Login.js, Register.js, MapPage.js, and MapComponent.js.
 - Backend Components: Refer to index.js, config.js, auth.js, and authMiddleware.js.
+
+## Directory Structure
+### Root Directory
+- frontend/: React.js application (Frontend)
+- backend/: Node.js API server (Backend)
+- package.json: Manages the root-level scripts and dependencies for running both services together.
+### Frontend
+- src/: React application source code.
+- public/: Static assets like index.html.
+### Backend
+- index.js: Backend server entry point.
+- middleware/: Authentication middleware.
+- routes/: API routes.
