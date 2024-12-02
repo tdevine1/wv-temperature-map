@@ -8,8 +8,7 @@
     "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
     "install:frontend": "npm install --prefix frontend",
     "install:backend": "npm install --prefix backend",
-    "build:frontend": "npm run build --prefix frontend",
-    "deploy": "npm run install:frontend && npm run install:backend && npm run build:frontend && npm run start"
+    "install": "concurrently \"npm run install:backend\" \"npm run install:frontend\""
   },
   "dependencies": {
     "concurrently": "^7.0.0",
