@@ -9,6 +9,6 @@
 
     "install:frontend": "npm install --prefix frontend",
     "install:backend": "npm install --prefix backend",
-    "install": "npm run install:backend & npm run install:frontend"
+    "build": "npm run build --prefix frontend"
   }
 }

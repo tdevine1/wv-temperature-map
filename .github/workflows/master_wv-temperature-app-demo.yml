@@ -31,8 +31,9 @@ jobs:
         # Runs the necessary npm commands to install dependencies, build the app, and run tests if they exist.
         run: |
           npm install
-          npm run install
-          npm run build --if-present
+          npm run install:frontend
+          npm run install:backend
+          npm run build
           npm run test --if-present
 
       - name: Zip artifact for deployment
