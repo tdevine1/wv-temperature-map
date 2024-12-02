@@ -12,6 +12,7 @@
     "deploy": "npm run install:frontend && npm run install:backend && npm run build:frontend && npm run start"
   },
   "dependencies": {
-    "concurrently": "^7.0.0"
+    "concurrently": "^7.0.0",
+    "yargs": "^17.7.2"
   }
 }
