@@ -80,12 +80,12 @@ jobs:
         with:
           name: deployment-artifact
       
-      - name: List contents of working directory
+      - name: Unzip artifact for deployment
         run: |
           pwd
           ls -lah
-          mkdir -p deploy
-        
+          unzip release.zip
+                  
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -97,4 +97,4 @@ jobs:
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'wv-temperature-app-demo'
-          package: ./frontend
+          package: .
