@@ -45,7 +45,7 @@ jobs:
         run: |
           pwd
           ls
-          mkdir -p deploy/frontend deploy/backend
+          mkdir -p deploy/frontend deploy/backend deploy/node_modules
           cp -r frontend/build/* deploy/frontend/
           cp -r backend/* deploy/backend/
           cp backend/package.json deploy/backend/
