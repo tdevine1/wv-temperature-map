@@ -96,4 +96,4 @@ jobs:
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'wv-temperature-app-demo'
-          package: ./release.zip
+          package: release.zip
