@@ -20,23 +20,36 @@ jobs:
           node-version: '20.x'
       
       - name: Install root dependencies
-        run:
+        run: |
+          pwd
+          ls -R
           npm install
+          ls -R
 
       - name: Install Frontend and Backend Dependencies
         run: |
+          pwd
+          ls -R
           npm install --prefix frontend
           npm install --prefix backend
+          ls -R
 
       - name: Build Frontend
-        run: npm run build --prefix frontend
+        run: |
+          pwd
+          ls -R
+          npm run build --prefix frontend
+          ls -R
 
       - name: Prepare Deployment Package
         run: |
+          pwd
+          ls -R
           mkdir -p deploy/frontend deploy/backend
           cp -r frontend/build/* deploy/frontend/
           cp -r backend/* deploy/backend/
           cp backend/package.json deploy/backend/
+          ls -R
         shell: bash
 
       - name: Verify Deployment Package
@@ -63,13 +76,14 @@ jobs:
           name: deployment-artifact
       
       - name: List contents of working directory
-        run: 
+        run: |
           pwd
           ls -lahR
+          mkdir -p deploy
         
       - name: Unzip artifact for deployment
         run: 
-          unzip deployment-artifact.zip
+          unzip deployment-artifact.zip -d deploy
 
       - name: Login to Azure
         uses: azure/login@v2
