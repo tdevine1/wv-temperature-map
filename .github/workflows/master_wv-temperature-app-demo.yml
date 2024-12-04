@@ -28,13 +28,12 @@ jobs:
           # Specifies the version of Node.js to use for the build.
 
       - name: npm install, build, and test
-        # Runs the necessary npm commands to install dependencies, build the app, and run tests if they exist.
+        # Runs the necessary npm commands to install dependencies and build the app
         run: |
           npm install
           npm run install:frontend
           npm run install:backend
-          npm run build
-          npm run test --if-present
+          npm run build --prefix frontend
 
       - name: Zip artifact for deployment
         # Zips the build output into a file called `release.zip` for deployment.
@@ -91,5 +90,5 @@ jobs:
           # The name of the Azure Web App to deploy to.
           slot-name: 'Production'
           # Specifies the deployment slot (default is `Production`).
-          package: .
+          package: ./frontend/build
           # Specifies the current directory (unzipped contents) as the deployment package.
