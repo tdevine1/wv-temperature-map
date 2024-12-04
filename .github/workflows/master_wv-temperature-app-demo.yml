@@ -45,7 +45,8 @@ jobs:
         run: |
           pwd
           ls
-          cp -r * deploy/
+          mkdir -p deploy
+          zip -r deploy/release.zip frontend/build backend
           ls
         shell: bash
 
