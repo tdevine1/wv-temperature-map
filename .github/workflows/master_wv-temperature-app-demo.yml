@@ -83,12 +83,6 @@ jobs:
           ls -lah
           mkdir -p deploy
         
-      - name: Unzip artifact for deployment
-        run: |
-          pwd
-          ls -lah
-          unzip deployment-artifact.zip -d deploy
-
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -100,4 +94,4 @@ jobs:
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'wv-temperature-app-demo'
-          package: deploy/frontend
+          package: .
