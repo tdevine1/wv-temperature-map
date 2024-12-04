@@ -80,11 +80,10 @@ jobs:
         with:
           name: deployment-artifact
       
-      - name: Unzip artifact for deployment
+      - name: Verify release zip presence
         run: |
           pwd
           ls -lah
-          unzip release.zip
                   
       - name: Login to Azure
         uses: azure/login@v2
@@ -97,4 +96,4 @@ jobs:
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'wv-temperature-app-demo'
-          package: .
+          package: ./release.zip
