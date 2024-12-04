@@ -22,41 +22,43 @@ jobs:
       - name: Install root dependencies
         run: |
           pwd
-          ls -R
+          ls
           npm install
-          ls -R
+          ls
 
       - name: Install Frontend and Backend Dependencies
         run: |
           pwd
-          ls -R
+          ls
           npm install --prefix frontend
           npm install --prefix backend
-          ls -R
+          ls
 
       - name: Build Frontend
         run: |
           pwd
-          ls -R
+          ls
           npm run build --prefix frontend
-          ls -R
+          ls
 
       - name: Prepare Deployment Package
         run: |
           pwd
-          ls -R
+          ls
           mkdir -p deploy/frontend deploy/backend
           cp -r frontend/build/* deploy/frontend/
           cp -r backend/* deploy/backend/
           cp backend/package.json deploy/backend/
-          ls -R
+          cp -r node_modules/* deploy/node_modules
+          cp package.json deploy/
+          ls
         shell: bash
 
       - name: Verify Deployment Package
         # Debugging step to verify contents of deploy directory
         run: |
           echo "Contents of deploy folder:"
-          ls -R deploy
+          ls deploy
         shell: bash
 
       - name: Upload Artifact for Deployment
@@ -78,11 +80,13 @@ jobs:
       - name: List contents of working directory
         run: |
           pwd
-          ls -lahR
+          ls -lah
           mkdir -p deploy
         
       - name: Unzip artifact for deployment
-        run: 
+        run: |
+          pwd
+          ls -lah
           unzip deployment-artifact.zip -d deploy
 
       - name: Login to Azure
