@@ -1,6 +1,4 @@
-# GitHub Actions Workflow: Deploy Fullstack App to Azure App Service
-
-name: Deploy Fullstack App to Azure Web App - wv-temperature-app-demo
+name: Build and deploy Node.js app to Azure Web App - wv-temperature-app-demo
 
 on:
   push:
@@ -21,7 +19,7 @@ jobs:
         with:
           node-version: '20.x'
 
-      - name: Install Dependencies for Frontend and Backend
+      - name: Install Frontend and Backend Dependencies
         run: |
           npm install --prefix frontend
           npm install --prefix backend
@@ -31,17 +29,24 @@ jobs:
 
       - name: Prepare Deployment Package
         run: |
-          mkdir -p deploy
-          cp -r frontend/build deploy/frontend
-          cp -r backend deploy/backend
-          cp backend/package.json deploy/backend
+          mkdir -p deploy/frontend deploy/backend
+          cp -r frontend/build/* deploy/frontend/
+          cp -r backend/* deploy/backend/
+          cp backend/package.json deploy/backend/
           cd deploy && zip -r release.zip .
+        shell: bash
+
+      - name: Verify Deployment Package
+        # Debugging step to verify contents of deploy directory
+        run: |
+          echo "Contents of deploy folder:"
+          ls -R deploy
         shell: bash
 
       - name: Upload Artifact for Deployment
         uses: actions/upload-artifact@v4
         with:
-          name: fullstack-app
+          name: deployment-artifact
           path: deploy/release.zip
 
   deploy:
@@ -49,12 +54,12 @@ jobs:
     needs: build
 
     steps:
-      - name: Download Artifact from Build Job
+      - name: Download Artifact
         uses: actions/download-artifact@v4
         with:
-          name: fullstack-app
+          name: deployment-artifact
 
-      - name: Unzip Deployment Package
+      - name: Unzip Artifact
         run: unzip deploy/release.zip -d deploy
 
       - name: Login to Azure
@@ -68,5 +73,4 @@ jobs:
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'wv-temperature-app-demo'
-          slot-name: 'Production'
-          package: ./deploy
+          package: deploy/frontend
