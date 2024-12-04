@@ -70,7 +70,14 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
-
+    environment:
+      name: 'Production'
+      # Specifies the environment to be used (this shows up in GitHub's Environment settings).
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+      # Uses the output of the deploy step to set the URL for the environment.
+    permissions:
+      id-token: write #This is required for requesting the JWT
+      
     steps:
       - name: Download Artifact
         uses: actions/download-artifact@v4
