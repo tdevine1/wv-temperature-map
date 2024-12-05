@@ -27,7 +27,7 @@ router.post('/register', async (req, res) => {
     await pool.request()
       .input('username', sql.NVarChar, username)
       .input('password', sql.NVarChar, hashedPassword)
-      .query('INSERT INTO Users (username, password) VALUES (@username, @password)');
+      .query('INSERT INTO dbo.Users (username, password) VALUES (@username, @password)');
     res.status(201).json({ message: 'User registered successfully' });
   } catch (error) {
     console.error("Error during user registration:", error);
@@ -49,7 +49,7 @@ router.post('/login', async (req, res) => {
     const pool = await sql.connect();
     const result = await pool.request()
       .input('username', sql.NVarChar, username)
-      .query('SELECT * FROM Users WHERE username = @username');
+      .query('SELECT * FROM dbo.Users WHERE username = @username');
     const user = result.recordset[0];
 
     // Check if user exists and password matches

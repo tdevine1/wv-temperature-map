@@ -18,7 +18,7 @@ const Login = ({ setAuthenticated }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-
+  const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000'; // Fallback for local development
   /**
    * handleSubmit
    * 
@@ -34,7 +34,7 @@ const Login = ({ setAuthenticated }) => {
 
     try {
       const response = await axios.post(
-        'http://localhost:5000/auth/login',
+        API_URL + '/auth/login',
         { username, password },
         { withCredentials: true }
       );

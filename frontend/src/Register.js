@@ -16,6 +16,7 @@ const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000'; // Fallback for local development
   /**
    * Handles form submission by sending registration details to the backend.
    * @param {Object} e - Event object from the form submission.
@@ -25,7 +26,7 @@ const Register = () => {
 
     try {
       const response = await axios.post(
-        'http://localhost:5000/auth/register',
+        API_URL + '/auth/register',
         { username, password },
         { withCredentials: true }
       );
