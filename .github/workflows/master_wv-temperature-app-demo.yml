@@ -48,7 +48,7 @@ jobs:
           pwd
           ls
           mkdir -p deploy
-          zip -r deploy/release.zip frontend/build backend
+          zip -r deploy/release.zip *
           ls
         shell: bash
 
