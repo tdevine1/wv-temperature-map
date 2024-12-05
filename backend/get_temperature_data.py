@@ -20,7 +20,7 @@ BBOX = [-82.644739, 37.201483, -77.719519, 40.638801]  # Bounding box for West V
 """BBOX = [-85.0, 35.0, -75.0, 42.0]  # Bounding box for West Virginia and surrounding area"""
 """BBOX = [-125.0, 24.396308, -66.93457, 49.384358]  # Approximate bounding box for the contiguous USA"""
 """BBOX = [-125.0, 47.0, -123.0, 49.0] # NW tip of continental US"""
-MAX_POINTS = 1000  # Maximum number of points to process
+MAX_POINTS = 100000  # Maximum number of points to process
 
 def celsius_to_fahrenheit(celsius):
     """

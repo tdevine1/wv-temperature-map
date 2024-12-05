@@ -22,9 +22,9 @@ connectDB();
 // Middleware setup
 app.use(express.json()); // Parse incoming JSON requests
 app.use(cookieParser()); // Parse cookies attached to client requests
-
+console.log(process.env.NODE_ENV);
 // In production, no CORS is needed as both front-end and back-end share the same origin
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV === 'development') {
   const cors = require('cors');
   app.use(cors({ origin: 'http://localhost:3000', credentials: true })); // Allow cross-origin requests in non-production mode
 } else { // Serve the front-end static files in production mode
