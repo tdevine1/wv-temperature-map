@@ -18,7 +18,7 @@ const Login = ({ setAuthenticated }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000'; // Fallback for local development
+  const API_URL = process.env.REACT_APP_API_URL || ''; 
   /**
    * handleSubmit
    * 
