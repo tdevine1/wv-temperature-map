@@ -45,6 +45,7 @@ function MapPage({ setAuthenticated }) {
    * @function
    */
   const fetchTemperatureData = async () => {
+    const API_URL = process.env.REACT_APP_API_URL || '';
     if (!date) {
       alert("Please select a date.");
       return;
@@ -54,7 +55,7 @@ function MapPage({ setAuthenticated }) {
     console.log(`Fetching temperature data for date: ${date}`);
 
     try {
-      const response = await axios.get(`http://localhost:5000/api/temperature/temperature-data`, {
+      const response = await axios.get(API_URL + `/api/temperature/temperature-data`, {
         params: { date },
       });
       setTemperatureData(response.data);
