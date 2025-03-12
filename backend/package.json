@@ -9,16 +9,17 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "The `backend` folder is the server-side component of the application, responsible for handling requests from the frontend, interacting with external APIs, managing the database, and providing data for rendering maps and managing user authentication. The backend is built using **Express.js** and leverages various middleware and route handlers to maintain a clean, modular structure that adheres to best practices in software engineering, including **separation of concerns**, **information hiding**, and **modularity**.",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
-    "express": "^4.21.1",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
     "git": "^0.1.5",
     "jsonwebtoken": "^9.0.2",
     "mssql": "^11.0.1",
+    "mysql2": "^3.13.0",
     "rm": "^0.1.8"
   }
 }

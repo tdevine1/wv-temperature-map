@@ -1,10 +1,4 @@
-/**
- * authMiddleware.js
- * 
- * This middleware function checks for a valid JWT in the request cookies. 
- * If the token is valid, it allows access to the protected route; otherwise, 
- * it blocks access and returns an error.
- */
+// backend/authMiddleware.js
 
 const jwt = require('jsonwebtoken');
 
