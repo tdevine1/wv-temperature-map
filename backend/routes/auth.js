@@ -1,14 +1,9 @@
-/**
- * auth.js
- * 
- * This file defines routes for user registration and login. It handles authentication 
- * by hashing passwords with bcrypt during registration and generating JWTs upon login.
- */
+// backend/auth.js
 
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { sql } = require('../config'); // Importing database configuration and connection
+const pool = require('../config/database'); // Using our MySQL pool
 const router = express.Router();
 
 /**
@@ -20,14 +15,17 @@ const router = express.Router();
  */
 router.post('/register', async (req, res) => {
   const { username, password } = req.body;
-  const hashedPassword = await bcrypt.hash(password, 10); // Hashing the password for security
-
+  
   try {
-    const pool = await sql.connect();
-    await pool.request()
-      .input('username', sql.NVarChar, username)
-      .input('password', sql.NVarChar, hashedPassword)
-      .query('INSERT INTO dbo.Users (username, password) VALUES (@username, @password)');
+    // Hash the user's password
+    const hashedPassword = await bcrypt.hash(password, 10);
+    
+    // Use the promise API to execute the INSERT query
+    const [result] = await pool.promise().execute(
+      'INSERT INTO users (username, password) VALUES (?, ?)',
+      [username, hashedPassword]
+    );
+    
     res.status(201).json({ message: 'User registered successfully' });
   } catch (error) {
     console.error("Error during user registration:", error);
@@ -44,18 +42,20 @@ router.post('/register', async (req, res) => {
  */
 router.post('/login', async (req, res) => {
   const { username, password } = req.body;
-
+  
   try {
-    const pool = await sql.connect();
-    const result = await pool.request()
-      .input('username', sql.NVarChar, username)
-      .query('SELECT * FROM dbo.Users WHERE username = @username');
-    const user = result.recordset[0];
-
-    // Check if user exists and password matches
+    // Query the database for the user by username
+    const [rows] = await pool.promise().execute(
+      'SELECT * FROM users WHERE username = ?',
+      [username]
+    );
+    const user = rows[0];
+    
+    // If user exists and the password matches, generate a JWT
     if (user && await bcrypt.compare(password, user.password)) {
-      const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-      // Set JWT in HttpOnly cookie for secure storage
+      const token = jwt.sign({ id: user.id, username: user.username }, process.env.JWT_SECRET, { expiresIn: '1h' });
+      
+      // Set JWT in an HTTP-only cookie
       res.cookie('token', token, { httpOnly: true, sameSite: 'strict' });
       res.json({ message: 'Login successful' });
     } else {

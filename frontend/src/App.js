@@ -7,9 +7,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import MapPage from './MapPage';
-import Login from './Login';
-import Register from './Register';
+import MapPage from './pages/MapPage';
+import Login from './pages/Login';
+import Register from './pages/Register';
 
 /**
  * Main application component that manages routes and authentication state.

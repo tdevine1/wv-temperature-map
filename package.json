@@ -6,11 +6,11 @@
     "start:frontend": "npm --prefix frontend start",
     "start:backend": "npm --prefix backend start",
     "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
-
     "install:frontend": "npm install --prefix frontend",
     "install:backend": "npm install --prefix backend"
   },
   "dependencies": {
-    "concurrently": "^7.0.0"
+    "concurrently": "^7.0.0",
+    "cors": "^2.8.5"
   }
 }

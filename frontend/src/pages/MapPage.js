@@ -8,8 +8,8 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import MapComponent from './MapComponent';
-import DateSelector from './DateSelector';
+import MapComponent from '../components/MapComponent';
+import DateSelector from '../components/DateSelector';
 import { ClipLoader } from 'react-spinners';
 import axios from 'axios';
 
