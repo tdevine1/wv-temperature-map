@@ -47,4 +47,4 @@ These guides provide all the necessary steps to set up your development environm
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [MIT License](./doc/LICENSE).

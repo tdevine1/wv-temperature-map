@@ -1,58 +1,112 @@
-# `backend` Folder
+# Backend – WV Temperature Map
 
-The `backend` folder is the server-side component of the application, responsible for handling requests from the frontend, interacting with external APIs, managing the database, and providing data for rendering maps and managing user authentication. The backend is built using **Express.js** and leverages various middleware and route handlers to maintain a clean, modular structure that adheres to best practices in software engineering, including **separation of concerns**, **information hiding**, and **modularity**.
+This is the server-side component of the WV Temperature Map project. It is built with Node.js and Express and serves as the API for user authentication and (in the future) NOAA temperature data integration. The backend uses a MySQL database for data persistence, bcrypt for password hashing, and JSON Web Tokens (JWT) for session management. This project is part of an educational initiative for a WVU Software Engineering course sponsored by the West Virginia High Tech Foundation.
 
-## Structure of the `backend` Folder
+---
 
-The backend is organized to achieve high **cohesion** and **low coupling** by separating different concerns across dedicated files and folders. This structure supports the **MVC architecture** and aligns with principles like the **Open-Closed Principle** and **Dependency Inversion Principle**.
+## Features
 
-### Folder and File Overview
+•  User Authentication:  
+   Secure registration and login using bcrypt (to hash passwords) and JWT (to manage sessions via HTTP-only cookies).
 
-```
+•  RESTful API:  
+   Provides endpoints for user registration and login which the frontend consumes.
+
+•  MySQL Database Integration:  
+   Uses the mysql2 package to connect to a MySQL database via a connection pool.
+
+•  CORS Support:  
+   Configured with the cors middleware to allow cross-origin requests from the frontend.
+
+---
+
+## Project Structure
+
 backend/
-├── config/                # Configuration files, including database setup
-│   └── db.js              # Establishes connection to the database
-├── middleware/            # Middleware functions for validation, authentication, logging
-│   ├── authMiddleware.js  # Middleware to ensure user is authenticated
-│   └── validate.js        # Middleware for validating request data
-├── routes/                # API route definitions for different backend functionalities
-│   ├── auth.js            # Routes for user authentication
-│   └── stac.js            # Routes for data retrieval from external APIs
-├── get_temperature_data.py # Python script to retrieve NOAA temperature data
-├── index.js               # Main entry point for the Express server
-└── README.md              # Documentation for the backend folder
-```
+├── config/
+│     └── database.js   - Sets up the MySQL connection pool using environment variables.
+├── routes/
+│     └── auth.js       - API endpoints for user registration and login.
+├── authMiddleware.js   - Middleware to validate JWT tokens for protected routes.
+├── app.js              - Main Express application file (initializes middleware, CORS, and routes).
+├── .env                - Environment variables (not committed; see .gitignore).
+└── README.txt          - This file.
 
-### Key Components in the Backend
+---
 
-1. **Configuration (`config`)**
-   - Contains settings and configuration details, such as database connections.
-   - **Encapsulates** database setup, keeping sensitive connection logic separate from the core application.
+## Prerequisites
 
-2. **Routes (`routes`)**
-   - Contains route definitions that interact with the frontend, handle user requests, and serve data.
-   - Each route file groups related endpoints (e.g., `auth.js` for authentication and `stac.js` for temperature data).
-   - Supports **modularity** by keeping route logic isolated to specific files, enhancing **cohesion** within each route file.
+- Node.js and npm (download from nodejs.org).
+- MySQL (installed locally or running in a Docker container).
+- Git (to clone the repository).
+- (Optional) Docker if you prefer running MySQL in a container.
 
-3. **Middleware (`middleware`)**
-   - Contains middleware functions that handle **cross-cutting concerns** such as logging, data validation, and authentication.
-   - By applying middleware to route files, we reduce **coupling** between primary route logic and these auxiliary tasks.
-   - **Example**: `authMiddleware.js` ensures users are authenticated before accessing specific routes, aligning with **information hiding** by keeping authentication logic separate from routes.
+---
 
-4. **Python Script (`get_temperature_data.py`)**
-   - A script that retrieves temperature data from NOAA through the Planetary Computer STAC API.
-   - This Python script is executed from within the Express app to access data beyond Node.js’s typical capabilities.
-   - **Separation of Concerns**: Encapsulating data retrieval in Python ensures the backend remains **open for extension** (Python integrations) without modifying core JavaScript code.
+## Setup Instructions
 
-5. **Main Server (`index.js`)**
-   - The entry point of the application, responsible for initializing the Express server and connecting middleware, routes, and the database.
-   - Establishes a central place to configure application-wide settings and middleware, improving **cohesion** and **modularity**.
+1. Environment Configuration  
+   Create a file named .env in the backend directory with the following content:
 
-### Key Principles and Design Choices
+   DB_HOST=localhost
+   DB_USER=root
+   DB_PASSWORD=P@55word
+   DB_NAME=authdb
+   DB_PORT=3306
+   PORT=3000
+   JWT_SECRET=bETMvHHeT0J0FyO07GRsHjQhoQwZBsJ1XqEppBQkPQA
 
-The backend structure is designed with several software engineering principles in mind:
+   Note: Ensure the .env file is listed in your .gitignore so it is not committed.
 
-- **Encapsulation**: Sensitive logic, such as database connection and authentication, is encapsulated in dedicated files, minimizing exposure of internal details.
-- **Separation of Concerns**: Each functionality (e.g., authentication, data retrieval) has its dedicated file, ensuring that code handling one concern does not interfere with another.
-- **Modularity**: Each folder and file in the backend has a specific responsibility, which makes the codebase more modular and easier to maintain.
-- **Dependency Inversion Principle**: By leveraging middleware and modular route files, the backend relies on abstractions (e.g., middleware functions) rather than specific implementations, making it easier to extend or modify.
+2. Installing Dependencies  
+   Open a terminal in the backend directory and run:
+   
+      npm install
+
+   This will install all required packages (Express, mysql2, dotenv, cors, bcryptjs, jsonwebtoken, etc.).
+
+3. Solving CORS Issues  
+   To allow requests from the frontend (e.g., running on http://localhost:3001), open app.js and add the following:
+
+   -  At the top, include:  
+         const cors = require('cors');
+
+   -  Then add this middleware before your routes are mounted:
+
+         app.use(cors({
+           origin: 'http://localhost:3001',  // Change this if your frontend runs on a different URL
+           credentials: true
+         }));
+
+4. Running the Server  
+   To start the backend server, run:
+   
+      npm start
+
+   If using nodemon for development, you might run:
+   
+      npm run dev
+
+   The server will start on the port specified in the .env file (default 3000).
+
+---
+
+## Testing and Troubleshooting
+
+- Database Connection:  
+   Ensure your MySQL server is running and that the connection details in .env are correct.
+
+- API Endpoints:  
+   Test endpoints with Postman or curl.
+
+- CORS Errors:  
+   Verify that the origin in your CORS configuration in app.js matches the URL where your frontend is running.
+
+- Environment Variables:  
+   Confirm that .env is properly loaded (using require('dotenv').config() at the top of app.js).
+
+---
+
+## Educational Context
+
+This backend is designed as a teaching tool for WVU Software Engineering students. It demonstrates how to build a secure RESTful API with user authentication, integrate a MySQL database, and handle cross-origin requests. Sponsored by the West Virginia High Tech Foundation, the project serves as a practical example of integrating real-world NOAA data into a full-stack web application.
