@@ -1,6 +1,6 @@
 # WV Temperature Map
 
-![Screenshot Description](./assets/screenshot.png)
+![Screenshot Description](./images/screenshot.png)
 
 **WV Temperature Map** is an educational full-stack web application developed for the Introduction to Software Engineering course at West Virginia University. This project guides students in creating a simple web app that integrates real-world NOAA data. The project is sponsored by the West Virginia High Tech Foundation and is designed to empower students with hands-on experience in modern web development, cloud hosting, and data integration.
 
