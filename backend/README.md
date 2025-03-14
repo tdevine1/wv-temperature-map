@@ -24,13 +24,14 @@ This is the server-side component of the WV Temperature Map project. It is built
 
 backend/
 ├── config/
-│     └── database.js   - Sets up the MySQL connection pool using environment variables.
+│   └── database.js         # Sets up and exports the MySQL connection pool using environment variables.
+├── middleware/
+│   └── authMiddleware.js   # Provides JWT verification for protecting API routes.
 ├── routes/
-│     └── auth.js       - API endpoints for user registration and login.
-├── authMiddleware.js   - Middleware to validate JWT tokens for protected routes.
-├── app.js              - Main Express application file (initializes middleware, CORS, and routes).
-├── .env                - Environment variables (not committed; see .gitignore).
-└── README.txt          - This file.
+│   └── auth.js             # Defines API endpoints for user registration and login.
+├── app.js                  # Main Express application file (initializes middleware, sets up CORS, and mounts routes).
+├── package.json            # Lists project dependencies and scripts.
+└── README.md               # Documentation and setup instructions for the backend.
 
 ---
 
