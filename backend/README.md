@@ -22,6 +22,7 @@ This is the server-side component of the WV Temperature Map project. It is built
 
 ## Project Structure
 
+```
 backend/
 ├── config/
 │   └── database.js         # Sets up and exports the MySQL connection pool using environment variables.
@@ -32,6 +33,7 @@ backend/
 ├── app.js                  # Main Express application file (initializes middleware, sets up CORS, and mounts routes).
 ├── package.json            # Lists project dependencies and scripts.
 └── README.md               # Documentation and setup instructions for the backend.
+```
 
 ---
 
