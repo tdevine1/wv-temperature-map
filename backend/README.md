@@ -51,6 +51,7 @@ backend/
 1. Environment Configuration  
    Create a file named .env in the backend directory with the following content:
 
+```
    DB_HOST=localhost
    DB_USER=root
    DB_PASSWORD=P@55word
@@ -58,38 +59,42 @@ backend/
    DB_PORT=3306
    PORT=3000
    JWT_SECRET=bETMvHHeT0J0FyO07GRsHjQhoQwZBsJ1XqEppBQkPQA
+```
 
    Note: Ensure the .env file is listed in your .gitignore so it is not committed.
 
 2. Installing Dependencies  
    Open a terminal in the backend directory and run:
-   
+```
       npm install
-
+```
    This will install all required packages (Express, mysql2, dotenv, cors, bcryptjs, jsonwebtoken, etc.).
 
 3. Solving CORS Issues  
    To allow requests from the frontend (e.g., running on http://localhost:3001), open app.js and add the following:
 
-   -  At the top, include:  
+   -  At the top, include:
+```
          const cors = require('cors');
-
+```
    -  Then add this middleware before your routes are mounted:
-
+```
          app.use(cors({
            origin: 'http://localhost:3001',  // Change this if your frontend runs on a different URL
            credentials: true
          }));
+```
 
 4. Running the Server  
    To start the backend server, run:
-   
+
+```
       npm start
-
+```
    If using nodemon for development, you might run:
-   
+```   
       npm run dev
-
+```
    The server will start on the port specified in the .env file (default 3000).
 
 ---
