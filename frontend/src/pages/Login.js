@@ -19,6 +19,7 @@ const Login = ({ setAuthenticated }) => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
   const API_URL = process.env.REACT_APP_API_URL || ''; // Fallback for local development
+  console.log("Sending Login Request to: " + API_URL)
   /**
    * handleSubmit
    * 
