@@ -22,7 +22,7 @@ app.use(cookieParser()); // Parse cookies attached to client requests
 
 // Enable CORS and allow credentials
 app.use(cors({
-  origin: 'http://localhost:3000', // Adjust this if your frontend runs on a different URL
+  origin: process.env.FRONTEND_URL, // Adjust this if your frontend runs on a different URL
   credentials: true
 }));
 
