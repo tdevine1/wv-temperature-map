@@ -16,8 +16,10 @@ const authRoutes = require('./routes/auth'); // Authentication routes
 const stacRoutes = require('./routes/stac'); // STAC routes, including temperature data
 
 const app = express();
-const BACKEND_PORT = process.env.BACKEND_PORT;
-
+// Use BACKEND_PORT for local dev, but on Azure use the PORT env var.
+const BACKEND_PORT = process.env.BACKEND_PORT 
+                  || process.env.PORT 
+                  || 3000;
 // Middleware setup
 app.use(express.json()); // Parse incoming JSON requests
 app.use(cookieParser()); // Parse cookies attached to client requests
