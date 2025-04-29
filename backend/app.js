@@ -17,9 +17,7 @@ const stacRoutes = require('./routes/stac'); // STAC routes, including temperatu
 
 const app = express();
 // Use BACKEND_PORT for local dev, but on Azure use the PORT env var.
-const BACKEND_PORT = process.env.PORT 
-                  || process.env.BACKEND_PORT 
-                  || 3000;
+const BACKEND_PORT = process.env.BACKEND_PORT;
 // Middleware setup
 app.use(express.json()); // Parse incoming JSON requests
 app.use(cookieParser()); // Parse cookies attached to client requests
