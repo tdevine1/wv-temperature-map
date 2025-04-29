@@ -2,7 +2,6 @@
 require('dotenv').config();
 
 const mysql = require('mysql2');
-const fs = require('fs');
 
 console.log('Connected to ', process.env.DB_HOST + ":" + process.env.DB_PORT);
 console.log('DB_USER:', process.env.DB_USER);
@@ -17,7 +16,7 @@ const pool = mysql.createPool({
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
-  ssl: {ca: fs.readFileSync(__dirname + '\\DigiCertGlobalRootCA.crt.pem')}
+  ssl: { rejectUnauthorized: true }
 });
 
 module.exports = pool;
