@@ -7,6 +7,8 @@
  */
 
 require('dotenv').config();
+console.log('Configured FRONTEND_URL=', process.env.FRONTEND_URL);
+
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const cors = require('cors'); // Import cors
@@ -20,9 +22,12 @@ const BACKEND_PORT = process.env.BACKEND_PORT;
 app.use(express.json()); // Parse incoming JSON requests
 app.use(cookieParser()); // Parse cookies attached to client requests
 
-// Enable CORS and allow credentials
+app.use((req, res, next) => {
+  console.log('Incoming Origin:', req.headers.origin);
+  next();
+});
 app.use(cors({
-  origin: process.env.FRONTEND_URL, // Adjust this if your frontend runs on a different URL
+  origin: process.env.FRONTEND_URL,
   credentials: true
 }));
 
