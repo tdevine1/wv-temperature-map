@@ -1,0 +1,32 @@
+name: Deploy Backend to Azure App Service
+
+on:
+  push:
+    branches:
+      - demo2
+  workflow_dispatch:
+
+jobs:
+  deploy-backend:
+    runs-on: ubuntu-latest
+    steps:
+      # 1) Checkout your code
+      - uses: actions/checkout@v3
+
+      # 2) Install Node & your dependencies
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+
+      - name: Install dependencies
+        working-directory: backend
+        run: npm ci
+
+      # 3) Deploy straight from the backend folder
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: CS330-2025-01-Demo-backend   # <— replace with your App Service name
+          publish-profile: ${{ secrets.APP_SERVICE_PUBLISH_PROFILE }}
+          package: backend
