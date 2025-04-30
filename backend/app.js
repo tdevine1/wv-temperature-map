@@ -32,8 +32,8 @@ app.use(cors({
 }));
 
 // Route setup
-app.use('/api/auth', authRoutes); // Authentication-related routes
-app.use('/api/temperature', stacRoutes); // Routes for accessing temperature data
+app.use('/', authRoutes); // Authentication-related routes
+app.use('/temperature', stacRoutes); // Routes for accessing temperature data
 
 // Start the server
 app.listen(BACKEND_PORT, () => {

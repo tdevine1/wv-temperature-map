@@ -10,7 +10,7 @@ import pool from '../config/database.js';
 const router = express.Router();
 /**
  * Registers a new user by hashing the password and storing user data in the database.
- * @route POST /auth/register
+ * @route POST /register
  * @param {string} username - The username of the user.
  * @param {string} password - The password of the user (will be hashed before storing).
  * @returns {JSON} Success message or error message.
@@ -37,7 +37,7 @@ router.post('/register', async (req, res) => {
 
 /**
  * Authenticates a user by verifying the password and generates a JWT for session management.
- * @route POST /auth/login
+ * @route POST /login
  * @param {string} username - The username of the user.
  * @param {string} password - The password of the user (plain text).
  * @returns {JSON} Success message with JWT cookie or error message.

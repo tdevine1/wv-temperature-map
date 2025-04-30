@@ -18,7 +18,7 @@ const Login = ({ setAuthenticated }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const API_URL = process.env.REACT_APP_API_URL || ''; // Fallback for local development
+  const API_URL = process.env.REACT_APP_API_URL || '';
   console.log("Sending Login Request to: " + API_URL)
   /**
    * handleSubmit
@@ -35,7 +35,7 @@ const Login = ({ setAuthenticated }) => {
 
     try {
       const response = await axios.post(
-        API_URL + '/auth/login',
+        API_URL + '/login',
         { username, password },
         { withCredentials: true }
       );

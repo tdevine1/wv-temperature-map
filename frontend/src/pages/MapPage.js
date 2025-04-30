@@ -55,7 +55,7 @@ function MapPage({ setAuthenticated }) {
     console.log(`Fetching temperature data for date: ${date}`);
 
     try {
-      const response = await axios.get(`${API_URL}/api/temperature/${date}`);
+      const response = await axios.get(`${API_URL}/temperature/${date}`);
       setTemperatureData(response.data);
       console.log("Temperature data received!\nFirst point:", response.data[0]);
     } catch (error) {
