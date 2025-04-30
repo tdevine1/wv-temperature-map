@@ -34,4 +34,13 @@ const pool = mysql.createPool({
   }
 });
 
+pool.getConnection()
+  .then(conn => {
+    console.log('Successfully connected to MySQL');
+    conn.release();
+  })
+  .catch(err => {
+    console.error('MySQL connection failed on startup:', err);
+  });
+
 export default pool;
