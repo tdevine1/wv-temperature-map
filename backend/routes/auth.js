@@ -5,6 +5,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import pool from '../config/database.js'; 
 
+
 // Create the router instance
 const router = express.Router();
 /**

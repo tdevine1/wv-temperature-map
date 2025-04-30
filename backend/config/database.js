@@ -1,6 +1,6 @@
 // backend/config/database.js
 import 'dotenv/config';
-import mysql from 'mysql2';
+import mysql from 'mysql2/promise';
 import fs    from 'fs';
 import path  from 'path';
 import { fileURLToPath } from 'url';
@@ -42,5 +42,5 @@ pool.getConnection()
   .catch(err => {
     console.error('MySQL connection failed on startup:', err);
   });
-
+  
 export default pool;
