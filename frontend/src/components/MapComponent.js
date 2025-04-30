@@ -56,7 +56,7 @@ function MapComponent({ temperatures = [] }) {
              {Array.isArray(temperatures) && temperatures.map((point, index) => (
                 <CircleMarker
                     key={index}
-                    center={[point.latitude, point.longitude]}
+                    center={[point.lat, point.lon]}
                     radius={marker_radius}
                     color={getColor(point.tavg)}
                     fillOpacity={marker_fillOpacity}
@@ -64,8 +64,8 @@ function MapComponent({ temperatures = [] }) {
                 >
                     <Popup>
                         <div>
-                            <p><strong>Latitude:</strong> {point.latitude.toFixed(4)}</p>
-                            <p><strong>Longitude:</strong> {point.longitude.toFixed(4)}</p>
+                            <p><strong>Latitude:</strong> {point.lat.toFixed(4)}</p>
+                            <p><strong>Longitude:</strong> {point.lon.toFixed(4)}</p>
                             <p><strong>Avg Temp:</strong> {point.tavg.toFixed(2)} °F</p>
                         </div>
                     </Popup>

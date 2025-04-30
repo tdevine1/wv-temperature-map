@@ -1,11 +1,12 @@
 // backend/auth.js
 
-const express = require('express');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const pool = require('../config/database'); // Using our MySQL pool
-const router = express.Router();
+import express from 'express';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import pool from '../config/database.js'; 
 
+// Create the router instance
+const router = express.Router();
 /**
  * Registers a new user by hashing the password and storing user data in the database.
  * @route POST /auth/register
@@ -67,4 +68,4 @@ router.post('/login', async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

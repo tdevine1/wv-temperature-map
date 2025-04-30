@@ -1,6 +1,7 @@
 {
   "name": "backend",
   "version": "1.0.0",
+  "type": "module",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\"",
@@ -16,10 +17,13 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "geoblaze": "^2.8.0",
+    "georaster": "^1.6.0",
     "git": "^0.1.5",
     "jsonwebtoken": "^9.0.2",
     "mssql": "^11.0.1",
     "mysql2": "^3.13.0",
+    "node-fetch": "^3.3.2",
     "rm": "^0.1.8"
   }
 }

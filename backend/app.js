@@ -6,14 +6,14 @@
  * and middleware for production deployment.
  */
 
-require('dotenv').config();
+import 'dotenv/config';  // loads .env
 console.log('Configured FRONTEND_URL=', process.env.FRONTEND_URL);
 
-const express = require('express');
-const cookieParser = require('cookie-parser');
-const cors = require('cors'); // Import cors
-const authRoutes = require('./routes/auth'); // Authentication routes
-const stacRoutes = require('./routes/stac'); // STAC routes, including temperature data
+import express from 'express';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';                   // Import cors
+import authRoutes from './routes/auth.js'; // Authentication routes
+import stacRoutes from './routes/stac.js'; // STAC routes, including temperature data
 
 const app = express();
 // Use BACKEND_PORT for local dev, but on Azure use the PORT env var.
