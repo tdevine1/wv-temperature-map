@@ -5,7 +5,6 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import pool from '../config/database.js'; 
 
-
 // Create the router instance
 const router = express.Router();
 /**
@@ -23,7 +22,7 @@ router.post('/register', async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     
     // Use the promise API to execute the INSERT query
-    const [result] = await pool.promise().execute(
+    const [result] = await pool.execute(
       'INSERT INTO users (username, password) VALUES (?, ?)',
       [username, hashedPassword]
     );
@@ -47,7 +46,7 @@ router.post('/login', async (req, res) => {
   
   try {
     // Query the database for the user by username
-    const [rows] = await pool.promise().execute(
+    const [rows] = await pool.execute(
       'SELECT * FROM users WHERE username = ?',
       [username]
     );
