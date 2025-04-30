@@ -32,7 +32,7 @@ app.use(cors({
 }));
 
 // Route setup
-app.use('/auth', authRoutes); // Authentication-related routes
+app.use('/api/auth', authRoutes); // Authentication-related routes
 app.use('/api/temperature', stacRoutes); // Routes for accessing temperature data
 
 // Start the server
