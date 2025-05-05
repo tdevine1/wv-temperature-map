@@ -36,6 +36,7 @@ const Register = () => {
         navigate('/'); // Navigate to login page after registration
       }
     } catch (error) {
+      console.log('Attempting to post to ${API_URL}/auth/register');
       console.error('Registration failed:', error);
       alert('Error registering user');
     }

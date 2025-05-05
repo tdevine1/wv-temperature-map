@@ -17,7 +17,7 @@ import { useNavigate, Link } from 'react-router-dom';
 const Login = ({ setAuthenticated }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate();
+  const navigate = useNavigate();werqwer
   const API_URL = process.env.REACT_APP_API_URL || '';
   console.log("Sending Login Request to: " + API_URL)
   /**
